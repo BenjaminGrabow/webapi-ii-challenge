@@ -93,6 +93,17 @@ server.get('/api/posts/:id/comments', async (req, res) => {
   }
 });
 
+server.post('/api/posts/:id/comments', async (req, res) => {
+  const messageInfo = { ...req.body, post_id: req.params.id };
+  try {
+    const message = await Posts.insertComment(messageInfo);
+    res.status(201).json(message);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error adding the comment',
+    });
+  }
+});
 
 server.listen(3500, () => {
   console.log('Server Running on http://localhost:3500 ***\n');
