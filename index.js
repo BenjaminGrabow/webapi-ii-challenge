@@ -81,6 +81,19 @@ server.get('/api/posts/:id/comments', async (req, res) => {
     }
   });
 
+  server.post('/api/posts', async (req, res) => {
+    try {
+    const hub = await Posts.insert(req.body);
+    res.status(201).json(hub);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: 'Error adding the post',
+    });
+  }
+});
+
+
 server.listen(3500, () => {
   console.log('Server Running on http://localhost:3500 ***\n');
 });
